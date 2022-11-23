@@ -1,6 +1,6 @@
 {
-	"name": "mwstake/mediawiki-component-processmanager",
-	"description": "Provides a management system for background processes",
+	"name": "mwstake/mediawiki-component-events",
+	"description": "Mechanism for firing events",
 	"license": "GPL-3.0-only",
 	"authors": [
 		{
@@ -10,8 +10,6 @@
 	],
 	"require": {
 		"composer/installers": "~1.0",
-		"symfony/process": "~5",
-		"symfony/filesystem": "~3",
 		"mwstake/mediawiki-componentloader": "~1"
 	},
 	"require-dev": {
@@ -23,8 +21,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"MWStake\\MediaWiki\\Component\\ProcessManager\\": "src/",
-			"MWStake\\MediaWiki\\Component\\ProcessManager\\Tests\\": "tests/"
+			"MWStake\\MediaWiki\\Component\\Events\\": "src/",
+			"MWStake\\MediaWiki\\Component\\Events\\Tests\\": "tests/"
 		},
 		"files": [
 			"bootstrap.php"
