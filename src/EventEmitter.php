@@ -14,7 +14,7 @@ final class EventEmitter {
 	/**
 	 * @param array $consumers
 	 */
-	public function __construct( array $consumers) {
+	public function __construct( array $consumers ) {
 		$this->consumers = $consumers;
 	}
 
@@ -23,7 +23,7 @@ final class EventEmitter {
 	 *
 	 * @throws \Exception
 	 */
-	public function emit( INotificationEvent $event ) {
+	public function emit( IEvent $event ) {
 		$this->assertEventNotAlreadyEmitted( $event );
 		foreach ( $this->consumers as $consumer ) {
 			if ( !$consumer->isInterested( $event ) ) {
@@ -34,11 +34,11 @@ final class EventEmitter {
 	}
 
 	/**
-	 * @param INotificationEvent $event
+	 * @param IEvent $event
 	 *
 	 * @return void
 	 */
-	private function assertEventNotAlreadyEmitted( INotificationEvent $event ) {
+	private function assertEventNotAlreadyEmitted( IEvent $event ) {
 		$eventSignature = $this->getEventSignature( $event );
 		if ( in_array( $eventSignature, $this->emittedEvents ) ) {
 			throw new InvalidArgumentException( "Event already emitted {$event->getKey()}" );
@@ -51,11 +51,11 @@ final class EventEmitter {
 	 * This will be used to determine if same event is fired multiple times
 	 * in one request
 	 *
-	 * @param INotificationEvent $event
+	 * @param IEvent $event
 	 *
 	 * @return string
 	 */
-	private function getEventSignature( INotificationEvent $event ) : string {
+	private function getEventSignature( IEvent $event ) : string {
 		$bits = [
 			$event->getKey(),
 			$event->getAgent()->getId(),

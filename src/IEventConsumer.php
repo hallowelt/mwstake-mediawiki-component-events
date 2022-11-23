@@ -6,16 +6,16 @@ interface IEventConsumer {
 	/**
 	 * React to an event
 	 *
-	 * @param INotificationEvent $event
+	 * @param IEvent $event
 	 *
 	 * @return void
 	 */
-	public function consume( INotificationEvent $event ) : void;
+	public function consume( IEvent $event ) : void;
 
 	/**
-	 * @param INotificationEvent $event
+	 * @param IEvent $event
 	 *
 	 * @return bool
 	 */
-	public function isInterested( INotificationEvent $event ) : bool;
+	public function isInterested( IEvent $event ) : bool;
 }
