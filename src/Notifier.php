@@ -3,10 +3,9 @@
 namespace MWStake\MediaWiki\Component\Events;
 
 use InvalidArgumentException;
-use MWStake\MediaWiki\Component\Events\Event\ITitleEvent;
 
-final class EventEmitter {
-	/** @var IEventConsumer[] */
+final class Notifier {
+	/** @var INotificationEventConsumer[] */
 	private $consumers;
 	/** @var array */
 	private $emittedEvents = [];
@@ -23,7 +22,7 @@ final class EventEmitter {
 	 *
 	 * @throws \Exception
 	 */
-	public function emit( IEvent $event ) {
+	public function emit( INotificationEvent $event ) {
 		$this->assertEventNotAlreadyEmitted( $event );
 		foreach ( $this->consumers as $consumer ) {
 			if ( !$consumer->isInterested( $event ) ) {
@@ -34,11 +33,11 @@ final class EventEmitter {
 	}
 
 	/**
-	 * @param IEvent $event
+	 * @param INotificationEvent $event
 	 *
 	 * @return void
 	 */
-	private function assertEventNotAlreadyEmitted( IEvent $event ) {
+	private function assertEventNotAlreadyEmitted( INotificationEvent $event ) {
 		$eventSignature = $this->getEventSignature( $event );
 		if ( in_array( $eventSignature, $this->emittedEvents ) ) {
 			throw new InvalidArgumentException( "Event already emitted {$event->getKey()}" );
@@ -51,11 +50,11 @@ final class EventEmitter {
 	 * This will be used to determine if same event is fired multiple times
 	 * in one request
 	 *
-	 * @param IEvent $event
+	 * @param INotificationEvent $event
 	 *
 	 * @return string
 	 */
-	private function getEventSignature( IEvent $event ) : string {
+	private function getEventSignature( INotificationEvent $event ) : string {
 		$bits = [
 			$event->getKey(),
 			$event->getAgent()->getId(),

@@ -2,7 +2,7 @@
 
 namespace MWStake\MediaWiki\Component\Events\Tests;
 
-use MWStake\MediaWiki\Component\Events\EventEmitter;
+use MWStake\MediaWiki\Component\Events\Notifier;
 use PHPUnit\Framework\TestCase;
 
 class EmitterTest extends TestCase {
@@ -24,7 +24,7 @@ class EmitterTest extends TestCase {
 			->with( $event )
 			->willReturn( true );
 
-		$emitter = new EventEmitter( [ $consumer ] );
+		$emitter = new Notifier( [ $consumer ] );
 		$emitter->emit( $event );
 	}
 
@@ -44,7 +44,7 @@ class EmitterTest extends TestCase {
 			->with( $event )
 			->willReturn( false );
 
-		$emitter = new EventEmitter( [ $consumer ] );
+		$emitter = new Notifier( [ $consumer ] );
 		$emitter->emit( $event );
 	}
 
@@ -64,7 +64,7 @@ class EmitterTest extends TestCase {
 		$consumer2->expects( $this->once() )->method( 'consume' )->with( $event );
 		$consumer2->expects( $this->once() )->method( 'isInterested' )->with( $event )->willReturn( true );
 
-		$emitter = new EventEmitter( [ $consumer1, $consumer2 ] );
+		$emitter = new Notifier( [ $consumer1, $consumer2 ] );
 		$emitter->emit( $event );
 
 	}

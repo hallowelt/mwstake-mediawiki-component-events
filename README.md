@@ -1,13 +1,13 @@
 # Events
 
-This component allows you to emit events to consumers
+This component allows you to emit notification events to consumers
 
 # Usage
 
 ## Register consumer
 
 ```php
-$GLOBALS['wgMWStakeEventConsumers'][] = [
+$GLOBALS['wgMWStakeNotificationEventConsumers'][] = [
 	'class' => MyConsumer::class,
 	'services' => [
 		'UserFactory'
@@ -18,7 +18,7 @@ $GLOBALS['wgMWStakeEventConsumers'][] = [
 ## Create Event
 
 ```php
-class MyEvent implements IEvent {
+class MyEvent implements \MWStake\MediaWiki\Component\Events\INotificationEvent {
  ....
 }
 
@@ -29,8 +29,8 @@ $event = new MyEvent( $user );
 ## Emit Event
 
 ```php
-$eventEmitter = MediaWikiServices::getInstance()->getService( 'MWStake.EventEmitter' );
-$eventEmitter->emit( $event );
+$notifier = MediaWikiServices::getInstance()->getService( 'MWStake.Notifier' );
+$notifier->emit( $event );
 
 // Will call MyConsumer::consume( $event )
 ```

@@ -2,6 +2,6 @@
 
 namespace MWStake\MediaWiki\Component\Events;
 
-interface PriorityEvent extends IEvent {
+interface PriorityEvent extends INotificationEvent {
 	// Events implementing this interface will be prioritized over other events
 }

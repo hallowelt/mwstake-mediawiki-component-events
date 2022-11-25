@@ -6,7 +6,7 @@ use DateTime;
 use MediaWiki\User\UserIdentity;
 use Message;
 
-interface IEvent {
+interface INotificationEvent {
 	/**
 	 * Unique event key, as specified in the event registration
 	 * (NotificationsEvents attribute)

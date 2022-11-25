@@ -4,7 +4,7 @@ namespace MWStake\MediaWiki\Component\Events;
 
 use Title;
 
-interface ITitleEvent extends IEvent {
+interface ITitleEvent extends INotificationEvent {
 	/**
 	 * @return Title
 	 */

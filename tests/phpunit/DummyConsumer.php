@@ -3,15 +3,15 @@
 namespace MWStake\MediaWiki\Component\Events\Tests;
 
 
-use MWStake\MediaWiki\Component\Events\IEvent;
-use MWStake\MediaWiki\Component\Events\IEventConsumer;
+use MWStake\MediaWiki\Component\Events\INotificationEvent;
+use MWStake\MediaWiki\Component\Events\INotificationEventConsumer;
 
-class DummyConsumer implements IEventConsumer {
-	public function consume( IEvent $event ) : void {
+class DummyConsumer implements INotificationEventConsumer {
+	public function consume( INotificationEvent $event ) : void {
 		// STUB
 	}
 
-	public function isInterested( IEvent $event ) : bool {
+	public function isInterested( INotificationEvent $event ) : bool {
 		return true;
 	}
 }

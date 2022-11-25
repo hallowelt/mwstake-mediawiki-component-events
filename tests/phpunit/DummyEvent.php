@@ -5,10 +5,10 @@ namespace MWStake\MediaWiki\Component\Events\Tests;
 use DateTime;
 use MediaWiki\User\UserIdentity;
 use Message;
-use MWStake\MediaWiki\Component\Events\IEvent;
+use MWStake\MediaWiki\Component\Events\INotificationEvent;
 use RawMessage;
 
-class DummyEvent implements IEvent {
+class DummyEvent implements INotificationEvent {
 	private $id = 0;
 
 	public function getKey() : string {
