@@ -54,7 +54,8 @@ interface INotificationEvent {
 	 * only to users who are on the list AND subscribed to the event
 	 *
 	 * Use carefully, this should not do the general filtering, its meant just for events with
-	 * a very specific set of receivers, eg. Permission change of particular users, group membership change, etc.
+	 * a very specific set of receivers,
+	 * eg. Permission change of particular users, group membership change, etc.
 	 *
 	 * @return array
 	 */
@@ -68,4 +69,13 @@ interface INotificationEvent {
 	 * @return mixed
 	 */
 	public function setTime( DateTime $time );
+
+	/**
+	 * List of event-keys that this one overrides
+	 * This is to be used to suppress notifications that are already covered by this one
+	 * It will suppress same-topic events if classnames of those are returned here
+	 *
+	 * @return array
+	 */
+	public function hasPriorityOver(): array;
 }

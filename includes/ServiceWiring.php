@@ -9,6 +9,6 @@ return [
 				$consumers[] = $consumer;
 			}
 		}
-		return new \MWStake\MediaWiki\Component\Events\Notifier( $consumers	);
+		return new \MWStake\MediaWiki\Component\Events\Notifier( $consumers );
 	}
 ];
