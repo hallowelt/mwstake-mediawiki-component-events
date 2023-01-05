@@ -2,17 +2,24 @@
 
 namespace MWStake\MediaWiki\Component\Events;
 
+use Wikimedia\Rdbms\LBFactory;
+
 final class Notifier {
 	/** @var INotificationEventConsumer[] */
 	private $consumers;
+
+	/** @var LBFactory */
+	private $loadBalancerFactory;
+
 	/** @var array */
 	private $queued = [];
 
 	/**
 	 * @param array $consumers
 	 */
-	public function __construct( array $consumers ) {
+	public function __construct( array $consumers, LBFactory $loadBalancerFactory ) {
 		$this->consumers = $consumers;
+		$this->loadBalancerFactory = $loadBalancerFactory;
 	}
 
 	/**
@@ -53,15 +60,31 @@ final class Notifier {
 	 * @return string
 	 */
 	private function getSignature( INotificationEvent $event, ?array $bits = [] ) : string {
+		$presetSubscribers = $this->simplifyPresetSubscribers( $event );
 		$finalBits = array_merge( [
 			$event->getAgent()->getId(),
-			$event->getTime()->format( 'YmdHis' )
+			$event->getTime()->format( 'YmdHis' ),
+			implode( '|', $presetSubscribers ),
 		], $bits );
 		if ( $event instanceof ITitleEvent ) {
 			$finalBits[] = $event->getTitle()->getPrefixedDBkey();
 		}
 
 		return md5( implode( $finalBits ) );
+	}
+
+	/**
+	 * @param INotificationEvent $event
+	 *
+	 * @return array
+	 */
+	private function simplifyPresetSubscribers( INotificationEvent $event ) : array {
+		$presetSubscribers = $event->getPresetSubscribers();
+		$finalPresetSubscribers = [];
+		foreach ( $presetSubscribers as $presetSubscriber ) {
+			$finalPresetSubscribers[] = $presetSubscriber->getName();
+		}
+		return $finalPresetSubscribers;
 	}
 
 	/**
@@ -96,7 +119,7 @@ final class Notifier {
 	/**
 	 * Flush events to consumers, the magic happens here
 	 */
-	public function __destruct() {
+	public function flush() {
 		$this->filterOutOverrides();
 		foreach ( $this->queued as $event ) {
 			foreach ( $this->consumers as $consumer ) {
@@ -106,5 +129,7 @@ final class Notifier {
 				$consumer->consume( $event );
 			}
 		}
+		// Need to make sure all DB writes are done before we continue, since this is just before __destruct
+		$this->loadBalancerFactory->commitMasterChanges();
 	}
 }

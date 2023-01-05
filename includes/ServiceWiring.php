@@ -1,5 +1,7 @@
 <?php
 
+use MWStake\MediaWiki\Component\Events\Notifier;
+
 return [
 	'MWStake.Notifier' => static function ( \MediaWiki\MediaWikiServices $services ) {
 		$consumers = [];
@@ -9,6 +11,6 @@ return [
 				$consumers[] = $consumer;
 			}
 		}
-		return new \MWStake\MediaWiki\Component\Events\Notifier( $consumers );
+		return new Notifier( $consumers, $services->getDBLoadBalancerFactory() );
 	}
 ];
