@@ -35,15 +35,15 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	 * @return string
 	 */
 	protected function getTitleDisplayText() : string {
-		if ( !$this->title->exists() ) {
-			return $this->title->getPrefixedText();
+		if ( !$this->getTitle()->exists() ) {
+			return $this->getTitle()->getPrefixedText();
 		}
 		$props = \PageProps::getInstance()->getProperties( $this->getTitle(), 'displaytext' );
 		if ( isset( $props[$this->getTitle()->getArticleID()] ) ) {
 			return $props[$this->getTitle()->getArticleID()];
 		}
 
-		return $this->title->getPrefixedText();
+		return $this->getTitle()->getPrefixedText();
 	}
 
 	/**
