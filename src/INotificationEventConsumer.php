@@ -10,12 +10,12 @@ interface INotificationEventConsumer {
 	 *
 	 * @return void
 	 */
-	public function consume( INotificationEvent $event ) : void;
+	public function consume( INotificationEvent $event ): void;
 
 	/**
 	 * @param INotificationEvent $event
 	 *
 	 * @return bool
 	 */
-	public function isInterested( INotificationEvent $event ) : bool;
+	public function isInterested( INotificationEvent $event ): bool;
 }

@@ -15,28 +15,28 @@ class DummyEvent implements INotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function getKey() : string {
+	public function getKey(): string {
 		return 'dummy-event';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getAgent() : UserIdentity {
+	public function getAgent(): UserIdentity {
 		return \User::newFromId( 1 );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getTime() : DateTime {
+	public function getTime(): DateTime {
 		return new DateTime();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getPresetSubscribers() : array {
+	public function getPresetSubscribers(): array {
 		return [];
 	}
 
@@ -57,28 +57,28 @@ class DummyEvent implements INotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function getMessage() : Message {
+	public function getMessage(): Message {
 		return new RawMessage( 'dummy' );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getIcon() : string {
+	public function getIcon(): string {
 		return '';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getLinks() : array {
+	public function getLinks(): array {
 		return [];
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getKeyMessage() : Message {
+	public function getKeyMessage(): Message {
 		return new RawMessage( 'Dummy event' );
 	}
 
@@ -92,14 +92,14 @@ class DummyEvent implements INotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function getGroupMessage( int $count ) : Message {
+	public function getGroupMessage( int $count ): Message {
 		return $this->getMessage();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function hasPriorityOver() : array {
+	public function hasPriorityOver(): array {
 		return [
 			'dummy-sub-event'
 		];

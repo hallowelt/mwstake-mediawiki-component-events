@@ -41,7 +41,7 @@ final class Notifier {
 	 *
 	 * @return string
 	 */
-	private function getEventSignature( INotificationEvent $event ) : string {
+	private function getEventSignature( INotificationEvent $event ): string {
 		return $this->getSignature( $event, [ $event->getKey() ] );
 	}
 
@@ -49,7 +49,7 @@ final class Notifier {
 	 * @param INotificationEvent $event
 	 * @return string
 	 */
-	private function getEventContentSignature( INotificationEvent $event ) : string {
+	private function getEventContentSignature( INotificationEvent $event ): string {
 		return $this->getSignature( $event );
 	}
 
@@ -59,7 +59,7 @@ final class Notifier {
 	 *
 	 * @return string
 	 */
-	private function getSignature( INotificationEvent $event, ?array $bits = [] ) : string {
+	private function getSignature( INotificationEvent $event, ?array $bits = [] ): string {
 		$presetSubscribers = $this->simplifyPresetSubscribers( $event );
 		$finalBits = array_merge( [
 			$event->getAgent()->getId(),
@@ -78,7 +78,7 @@ final class Notifier {
 	 *
 	 * @return array
 	 */
-	private function simplifyPresetSubscribers( INotificationEvent $event ) : array {
+	private function simplifyPresetSubscribers( INotificationEvent $event ): array {
 		$presetSubscribers = $event->getPresetSubscribers();
 		$finalPresetSubscribers = [];
 		foreach ( $presetSubscribers as $presetSubscriber ) {

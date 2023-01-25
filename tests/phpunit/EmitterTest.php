@@ -13,9 +13,8 @@ class EmitterTest extends TestCase {
 	 * @covers \MWStake\MediaWiki\Component\Events\Emitter::__destruct
 	 */
 	public function testOverrides( $main, $sub, $expectedCalls ) {
-
 		$consumer = $this->getMockBuilder( DummyConsumer::class )
-			->setMethods( [ 'consume', 'isInterested' ] )
+			->onlyMethods( [ 'consume', 'isInterested' ] )
 			->getMock();
 		$consumer->expects( $this->exactly( $expectedCalls ) )
 			->method( 'consume' );
@@ -58,7 +57,7 @@ class EmitterTest extends TestCase {
 		$event = new DummyEvent();
 
 		$consumer = $this->getMockBuilder( DummyConsumer::class )
-			->setMethods( [ 'consume', 'isInterested' ] )
+			->onlyMethods( [ 'consume', 'isInterested' ] )
 			->getMock();
 		$consumer->expects( $this->once() )
 			->method( 'consume' )
@@ -79,7 +78,7 @@ class EmitterTest extends TestCase {
 		$event = new DummyEvent();
 
 		$consumer = $this->getMockBuilder( DummyConsumer::class )
-			->setMethods( [ 'consume', 'isInterested' ] )
+			->onlyMethods( [ 'consume', 'isInterested' ] )
 			->getMock();
 		$consumer->expects( $this->never() )
 			->method( 'consume' );
@@ -99,7 +98,7 @@ class EmitterTest extends TestCase {
 		$event = new DummyEvent();
 
 		$consumer1 = $this->getMockBuilder( DummyConsumer::class )
-			->setMethods( [ 'consume', 'isInterested' ] )->getMock();
+			->onlyMethods( [ 'consume', 'isInterested' ] )->getMock();
 		$consumer1->expects( $this->once() )->method( 'consume' )->with( $event );
 		$consumer1->expects( $this->once() )
 			->method( 'isInterested' )
@@ -107,7 +106,7 @@ class EmitterTest extends TestCase {
 			)->willReturn( true );
 
 		$consumer2 = $this->getMockBuilder( DummyConsumer::class )
-			->setMethods( [ 'consume', 'isInterested' ] )->getMock();
+			->onlyMethods( [ 'consume', 'isInterested' ] )->getMock();
 		$consumer2->expects( $this->once() )->method( 'consume' )->with( $event );
 		$consumer2->expects( $this->once() )
 			->method( 'isInterested' )

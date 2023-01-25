@@ -11,7 +11,7 @@ class DummyConsumer implements INotificationEventConsumer {
 	 *
 	 * @return void
 	 */
-	public function consume( INotificationEvent $event ) : void {
+	public function consume( INotificationEvent $event ): void {
 		// STUB
 	}
 
@@ -20,7 +20,7 @@ class DummyConsumer implements INotificationEventConsumer {
 	 *
 	 * @return bool
 	 */
-	public function isInterested( INotificationEvent $event ) : bool {
+	public function isInterested( INotificationEvent $event ): bool {
 		return true;
 	}
 }

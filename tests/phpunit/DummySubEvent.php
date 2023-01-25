@@ -17,21 +17,24 @@ class DummySubEvent extends DummyEvent implements INotificationEvent {
 		$this->agentId = $agentId;
 	}
 
-	public function getAgent() : UserIdentity {
+	/**
+	 * @return UserIdentity
+	 */
+	public function getAgent(): UserIdentity {
 		return \User::newFromId( $this->agentId );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getKey() : string {
+	public function getKey(): string {
 		return 'dummy-sub-event';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function hasPriorityOver() : array {
+	public function hasPriorityOver(): array {
 		return [];
 	}
 }

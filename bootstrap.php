@@ -13,11 +13,10 @@ Bootstrapper::getInstance()
 		$GLOBALS['wgServiceWiringFiles'][] = __DIR__ . '/includes/ServiceWiring.php';
 		$GLOBALS['wgMWStakeNotificationEventConsumers'] = [];
 
-		$GLOBALS['wgExtensionFunctions'][] = static function() {
+		$GLOBALS['wgExtensionFunctions'][] = static function () {
 			// During the app lifecycle, Notifier just queues events
 			// This is where it actually emits them (before shutdown)
 			$notifier = \MediaWiki\MediaWikiServices::getInstance()->getService( 'MWStake.Notifier' );
 			register_shutdown_function( [ $notifier, 'flush' ] );
 		};
-
 	} );

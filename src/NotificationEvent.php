@@ -35,14 +35,14 @@ abstract class NotificationEvent implements INotificationEvent {
 	/**
 	 * @return string
 	 */
-	public function getIcon() : string {
+	public function getIcon(): string {
 		return '';
 	}
 
 	/**
 	 * @return Message
 	 */
-	public function getKeyMessage() : Message {
+	public function getKeyMessage(): Message {
 		return Message::newFromKey( 'extension-notifications-event-' . $this->getKey() );
 	}
 
@@ -56,7 +56,7 @@ abstract class NotificationEvent implements INotificationEvent {
 	/**
 	 * @return array
 	 */
-	public function getPresetSubscribers() : array {
+	public function getPresetSubscribers(): array {
 		// Notify all subscribed users
 		return [];
 	}
@@ -73,7 +73,7 @@ abstract class NotificationEvent implements INotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasPriorityOver() : array {
+	public function hasPriorityOver(): array {
 		return [];
 	}
 }

@@ -34,7 +34,7 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	/**
 	 * @return string
 	 */
-	protected function getTitleDisplayText() : string {
+	protected function getTitleDisplayText(): string {
 		if ( !$this->getTitle()->exists() ) {
 			return $this->getTitle()->getPrefixedText();
 		}
@@ -49,7 +49,7 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function getLinks() : array {
+	public function getLinks(): array {
 		return [
 			new EventLink(
 				$this->getTitle()->getFullURL(),
