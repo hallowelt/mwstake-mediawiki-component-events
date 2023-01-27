@@ -130,6 +130,6 @@ final class Notifier {
 			}
 		}
 		// Need to make sure all DB writes are done before we continue, since this is just before __destruct
-		$this->loadBalancerFactory->commitMasterChanges();
+		$this->loadBalancerFactory->commitPrimaryChanges();
 	}
 }
