@@ -6,11 +6,11 @@ This component allows you to emit notification events to consumers
 
 **MediaWiki 1.35**
 
-- Add `"mwstake/mediawiki-component-wikitext": "~1"` to the `require` section of your `composer.json` file.
+- Add `"mwstake/mediawiki-component-events": "~1"` to the `require` section of your `composer.json` file.
 
 **MediaWiki 1.39**
 
-- Add `"mwstake/mediawiki-component-wikitext": "~2"` to the `require` section of your `composer.json` file.
+- Add `"mwstake/mediawiki-component-events": "~2"` to the `require` section of your `composer.json` file.
 
 ## Register consumer
 
