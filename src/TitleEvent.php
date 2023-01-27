@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MWStake\MediaWiki\Component\Events;
 
+use MediaWiki\Page\PageIdentity;
 use MediaWiki\User\UserIdentity;
 use Message;
 use Title;
@@ -19,8 +20,12 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	 * @param UserIdentity $agent
 	 * @param Title $title
 	 */
-	public function __construct( UserIdentity $agent, Title $title ) {
+	public function __construct( UserIdentity $agent, PageIdentity $title ) {
 		parent::__construct( $agent );
+		if ( !( $title instanceof Title ) ) {
+			// This is not so cool, but just a quick fix for now
+			$title = Title::castFromPageIdentity( $title );
+		}
 		$this->title = $title;
 	}
 
