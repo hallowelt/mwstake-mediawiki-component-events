@@ -68,7 +68,8 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 		if ( !$title->exists() ) {
 			return $title->getPrefixedText();
 		}
-		$props = \PageProps::getInstance()->getProperties( $title, 'displaytext' );
+		$props = MediaWikiServices::getInstance()->getPageProps()
+			->getProperties( $title, 'displaytext' );
 		if ( isset( $props[$title->getArticleID()] ) ) {
 			return $props[$title->getArticleID()];
 		}
