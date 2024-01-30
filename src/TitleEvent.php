@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MWStake\MediaWiki\Component\Events;
 
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\PageIdentity;
 use MediaWiki\User\UserIdentity;
 use Message;
@@ -43,7 +44,8 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 		if ( !$this->getTitle()->exists() ) {
 			return $this->getTitle()->getPrefixedText();
 		}
-		$props = \PageProps::getInstance()->getProperties( $this->getTitle(), 'displaytext' );
+		$props = MediaWikiServices::getInstance()->getPageProps()
+			->getProperties( $this->getTitle(), 'displaytext' );
 		if ( isset( $props[$this->getTitle()->getArticleID()] ) ) {
 			return $props[$this->getTitle()->getArticleID()];
 		}
