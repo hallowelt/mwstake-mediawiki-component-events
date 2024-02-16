@@ -43,6 +43,12 @@ interface INotificationEvent {
 	public function getTime(): DateTime;
 
 	/**
+	 * Message to be shown before the list of links (if applicable)
+	 * @return Message|null
+	 */
+	public function getLinksIntroMessage(): ?Message;
+
+	/**
 	 * @return EventLink[]
 	 */
 	public function getLinks(): array;
