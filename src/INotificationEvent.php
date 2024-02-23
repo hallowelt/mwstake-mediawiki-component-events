@@ -3,6 +3,7 @@
 namespace MWStake\MediaWiki\Component\Events;
 
 use DateTime;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
 use Message;
 
@@ -68,15 +69,6 @@ interface INotificationEvent {
 	public function getPresetSubscribers(): array;
 
 	/**
-	 * This is just for DEV, otherwise DT is never changeable
-	 * Will be removed eventually
-	 * @param DateTime $time
-	 *
-	 * @return mixed
-	 */
-	public function setTime( DateTime $time );
-
-	/**
 	 * List of event-keys that this one overrides
 	 * This is to be used to suppress notifications that are already covered by this one
 	 * It will suppress same-topic events if classnames of those are returned here
@@ -84,4 +76,16 @@ interface INotificationEvent {
 	 * @return array
 	 */
 	public function hasPriorityOver(): array;
+
+	/**
+	 * Returns the arguments needed for testing. These will be used to mock-trigger the event.
+	 *
+	 * @param UserIdentity $agent The user identity object.
+	 * @param MediaWikiServices $services The MediaWiki services object.
+	 * @param array|null $extra Extra arguments.
+	 * @return array The arguments needed for testing.
+	 */
+	public static function getArgsForTesting(
+		UserIdentity $agent, MediaWikiServices $services, array $extra = []
+	): array;
 }

@@ -69,15 +69,6 @@ abstract class NotificationEvent implements INotificationEvent {
 	}
 
 	/**
-	 * @param DateTime $time
-	 *
-	 * @return void
-	 */
-	public function setTime( DateTime $time ) {
-		$this->time = $time;
-	}
-
-	/**
 	 * @inheritDoc
 	 */
 	public function hasPriorityOver(): array {

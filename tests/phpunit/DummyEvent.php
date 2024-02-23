@@ -85,13 +85,6 @@ class DummyEvent implements INotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function setTime( DateTime $time ) {
-		// STUB
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function getGroupMessage( int $count ): Message {
 		return $this->getMessage();
 	}
