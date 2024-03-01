@@ -1,6 +1,6 @@
 <?php
 
-namespace MMWStake\MediaWiki\Component\Events;
+namespace MWStake\MediaWiki\Component\Events;
 
 use MWStake\MediaWiki\Component\Events\INotificationEvent;
 

@@ -62,11 +62,11 @@ abstract class NotificationEvent implements INotificationEvent {
 	}
 
 	/**
-	 * @return array
+	 * @return array|null
 	 */
-	public function getPresetSubscribers(): array {
+	public function getPresetSubscribers(): ?array {
 		// Notify all subscribed users
-		return [];
+		return null;
 	}
 
 	/**

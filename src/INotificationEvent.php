@@ -56,17 +56,18 @@ interface INotificationEvent {
 
 	/**
 	 * List of users that should be notified about this event
-	 * If the list is empty, the event will be sent to all users who are subscribed to the event
+	 * If the list is empty, event will be sent to no-one
 	 * If the list is not empty, the event will be sent
 	 * only to users who are on the list AND subscribed to the event
+	 * If return is null, the event will be sent to all users who are subscribed to the event
 	 *
 	 * Use carefully, this should not do the general filtering, its meant just for events with
 	 * a very specific set of receivers,
 	 * eg. Permission change of particular users, group membership change, etc.
 	 *
-	 * @return array
+	 * @return array|null
 	 */
-	public function getPresetSubscribers(): array;
+	public function getPresetSubscribers(): ?array;
 
 	/**
 	 * List of event-keys that this one overrides
