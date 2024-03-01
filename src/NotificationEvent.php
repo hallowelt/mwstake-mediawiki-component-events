@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace MWStake\MediaWiki\Component\Events;
 
 use DateTime;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
 use Message;
 
@@ -43,7 +44,7 @@ abstract class NotificationEvent implements INotificationEvent {
 	 * @return Message
 	 */
 	public function getKeyMessage(): Message {
-		return Message::newFromKey( 'extension-notifications-event-' . $this->getKey() );
+		return new \RawMessage( $this->getKey() );
 	}
 
 	/**
@@ -73,5 +74,18 @@ abstract class NotificationEvent implements INotificationEvent {
 	 */
 	public function hasPriorityOver(): array {
 		return [];
+	}
+
+	public function isBotAgent(): bool {
+		return $this->getAgent() instanceof BotAgent;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public static function getArgsForTesting(
+		UserIdentity $agent, MediaWikiServices $services, array $extra = []
+	): array {
+		return [ $agent ];
 	}
 }

@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MWStake\MediaWiki\Component\Events;
 
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\PageIdentity;
 use MediaWiki\User\UserIdentity;
 use Message;
@@ -18,12 +19,11 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 
 	/**
 	 * @param UserIdentity $agent
-	 * @param Title $title
+	 * @param PageIdentity $title
 	 */
 	public function __construct( UserIdentity $agent, PageIdentity $title ) {
 		parent::__construct( $agent );
-		if ( !( $title instanceof Title ) ) {
-			// This is not so cool, but just a quick fix for now
+		if ( !$title instanceof Title ) {
 			$title = Title::castFromPageIdentity( $title );
 		}
 		$this->title = $title;
@@ -37,18 +37,43 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	}
 
 	/**
-	 * @return string
+	 * @return Message
 	 */
-	protected function getTitleDisplayText(): string {
-		if ( !$this->getTitle()->exists() ) {
-			return $this->getTitle()->getPrefixedText();
-		}
-		$props = \PageProps::getInstance()->getProperties( $this->getTitle(), 'displaytext' );
-		if ( isset( $props[$this->getTitle()->getArticleID()] ) ) {
-			return $props[$this->getTitle()->getArticleID()];
+	public function getMessage(): Message {
+		$msgKey = $this->getMessageKey();
+		if ( $this->isBotAgent() ) {
+			$msgKey .= '-bot';
 		}
 
-		return $this->getTitle()->getPrefixedText();
+		return Message::newFromKey( $msgKey )->params(
+			$this->getTitle()->getFullURL(),
+			$this->getTitleDisplayText()
+		);
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getMessageKey(): string {
+		// STUB - to be implemented by subclasses
+		return '';
+	}
+
+	/**
+	 * @param Title|null $title
+	 * @return string
+	 */
+	protected function getTitleDisplayText( ?Title $title = null ): string {
+		$title = $title ?? $this->getTitle();
+		if ( !$title->exists() ) {
+			return $title->getPrefixedText();
+		}
+		$props = \PageProps::getInstance()->getProperties( $title, 'displaytext' );
+		if ( isset( $props[$title->getArticleID()] ) ) {
+			return $props[$title->getArticleID()];
+		}
+
+		return $title->getPrefixedText();
 	}
 
 	/**
@@ -58,8 +83,20 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 		return [
 			new EventLink(
 				$this->getTitle()->getFullURL(),
-				Message::newFromKey( 'ext-notification-link-label-view-page' )
+				Message::newFromKey( 'ext-notifications-link-label-view-page' )
 			)
 		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public static function getArgsForTesting(
+		UserIdentity $agent, MediaWikiServices $services, array $extra = []
+	): array {
+		if ( isset( $extra['title'] ) ) {
+			return [ $agent, $extra['title'] ];
+		}
+		return parent::getArgsForTesting( $agent, $services, $extra );
 	}
 }
