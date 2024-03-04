@@ -79,7 +79,7 @@ final class Notifier {
 	 * @return array
 	 */
 	private function simplifyPresetSubscribers( INotificationEvent $event ): array {
-		$presetSubscribers = $event->getPresetSubscribers();
+		$presetSubscribers = $event->getPresetSubscribers() ?? [];
 		$finalPresetSubscribers = [];
 		foreach ( $presetSubscribers as $presetSubscriber ) {
 			$finalPresetSubscribers[] = $presetSubscriber->getName();
