@@ -9,7 +9,7 @@ if ( defined( 'MWSTAKE_MEDIAWIKI_COMPONENT_EVENTS_VERSION' ) ) {
 define( 'MWSTAKE_MEDIAWIKI_COMPONENT_EVENTS_VERSION', '2.0.8' );
 
 Bootstrapper::getInstance()
-	->register( 'events', function () {
+	->register( 'events', static function () {
 		$GLOBALS['wgServiceWiringFiles'][] = __DIR__ . '/includes/ServiceWiring.php';
 		$GLOBALS['wgMWStakeNotificationEventConsumers'] = [];
 

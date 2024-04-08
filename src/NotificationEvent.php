@@ -57,7 +57,7 @@ abstract class NotificationEvent implements INotificationEvent {
 	/**
 	 * @return Message|null
 	 */
-	public function getLinksIntroMessage() : ?Message {
+	public function getLinksIntroMessage(): ?Message {
 		return null;
 	}
 
