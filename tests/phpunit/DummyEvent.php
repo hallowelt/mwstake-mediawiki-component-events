@@ -3,6 +3,7 @@
 namespace MWStake\MediaWiki\Component\Events\Tests;
 
 use DateTime;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
 use Message;
 use MWStake\MediaWiki\Component\Events\INotificationEvent;
@@ -23,7 +24,7 @@ class DummyEvent implements INotificationEvent {
 	 * @inheritDoc
 	 */
 	public function getAgent(): UserIdentity {
-		return \User::newFromId( 1 );
+		return MediaWikiServices::getInstance()->getUserFactory()->newFromId( 1 );
 	}
 
 	/**
