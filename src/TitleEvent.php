@@ -8,6 +8,8 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\PageIdentity;
 use MediaWiki\User\UserIdentity;
 use Message;
+use MWStake\MediaWiki\Component\Events\Delivery\IChannel;
+use MWStake\MediaWiki\Component\Events\Delivery\IExternalChannel;
 use Title;
 
 /**
@@ -39,16 +41,29 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	/**
 	 * @return Message
 	 */
-	public function getMessage(): Message {
+	/**
+	 * @param IChannel $forChannel
+	 * @return Message
+	 */
+	public function getMessage( IChannel $forChannel ): Message {
 		$msgKey = $this->getMessageKey();
 		if ( $this->isBotAgent() ) {
 			$msgKey .= '-bot';
 		}
 
 		return Message::newFromKey( $msgKey )->params(
-			$this->getTitle()->getFullURL(),
+			$this->getTitleUrl( $this->getTitle(), $forChannel ),
 			$this->getTitleDisplayText()
 		);
+	}
+
+	/**
+	 * @param Title $title
+	 * @param IChannel $forChannel
+	 * @return string
+	 */
+	protected function getTitleUrl( Title $title, IChannel $forChannel ): string {
+		return $title->getFullURL();
 	}
 
 	/**
@@ -79,10 +94,11 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function getLinks(): array {
+	public function getLinks( IChannel $forChannel ): array {
 		return [
 			new EventLink(
-				$this->getTitle()->getFullURL(),
+				$forChannel instanceof IExternalChannel ?
+					$this->getTitle()->getFullURL() : $this->getTitle()->getLocalURL(),
 				Message::newFromKey( 'ext-notifications-link-label-view-page' )
 			)
 		];

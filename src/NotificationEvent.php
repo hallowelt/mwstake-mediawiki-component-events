@@ -8,6 +8,7 @@ use DateTime;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
 use Message;
+use MWStake\MediaWiki\Component\Events\Delivery\IChannel;
 
 /**
  * Convenience base class for notification events
@@ -55,9 +56,10 @@ abstract class NotificationEvent implements INotificationEvent {
 	}
 
 	/**
+	 * @param IChannel $forChannel
 	 * @return Message|null
 	 */
-	public function getLinksIntroMessage(): ?Message {
+	public function getLinksIntroMessage( IChannel $forChannel ): ?Message {
 		return null;
 	}
 

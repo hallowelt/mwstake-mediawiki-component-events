@@ -6,11 +6,11 @@ use DateTime;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
 use Message;
+use MWStake\MediaWiki\Component\Events\Delivery\IChannel;
 
 interface INotificationEvent {
 	/**
 	 * Unique event key, as specified in the event registration
-	 * (NotificationsEvents attribute)
 	 *
 	 * @return string
 	 */
@@ -24,9 +24,10 @@ interface INotificationEvent {
 	public function getKeyMessage(): Message;
 
 	/**
+	 * @param IChannel $forChannel
 	 * @return Message
 	 */
-	public function getMessage(): Message;
+	public function getMessage( IChannel $forChannel ): Message;
 
 	/**
 	 * @return string Icon name
@@ -45,14 +46,16 @@ interface INotificationEvent {
 
 	/**
 	 * Message to be shown before the list of links (if applicable)
+	 * @param IChannel $forChannel
 	 * @return Message|null
 	 */
-	public function getLinksIntroMessage(): ?Message;
+	public function getLinksIntroMessage( IChannel $forChannel ): ?Message;
 
 	/**
+	 * @param IChannel $forChannel
 	 * @return EventLink[]
 	 */
-	public function getLinks(): array;
+	public function getLinks( IChannel $forChannel ): array;
 
 	/**
 	 * List of users that should be notified about this event
