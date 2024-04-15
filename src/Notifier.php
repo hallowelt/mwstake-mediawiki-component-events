@@ -4,7 +4,7 @@ namespace MWStake\MediaWiki\Component\Events;
 
 use Wikimedia\Rdbms\LBFactory;
 
-final class Notifier {
+class Notifier {
 	/** @var INotificationEventConsumer[] */
 	private $consumers;
 
