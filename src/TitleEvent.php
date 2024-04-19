@@ -46,15 +46,16 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	 * @return Message
 	 */
 	public function getMessage( IChannel $forChannel ): Message {
+		$params = [];
 		$msgKey = $this->getMessageKey();
 		if ( $this->isBotAgent() ) {
 			$msgKey .= '-bot';
+		} else {
+			$params[] = $this->getAgent()->getName();
 		}
+		$params[] = $this->getTitleAnchor( $this->getTitle(), $forChannel );
 
-		return Message::newFromKey( $msgKey )->params(
-			$this->getTitleUrl( $this->getTitle(), $forChannel ),
-			$this->getTitleDisplayText()
-		);
+		return Message::newFromKey( $msgKey )->params( $params );
 	}
 
 	/**
@@ -62,8 +63,13 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 	 * @param IChannel $forChannel
 	 * @return string
 	 */
-	protected function getTitleUrl( Title $title, IChannel $forChannel ): string {
-		return $title->getFullURL();
+	protected function getTitleAnchor( Title $title, IChannel $forChannel, ?string $label = null ): string {
+		$label = $label ?? $this->getTitleDisplayText( $title );
+		if (  $forChannel instanceof IExternalChannel  ) {
+			return '[' . $title->getFullURL() . ' ' . $label . ']';
+		}
+
+		return '[[' . $title->getPrefixedText() . '|' . $label . ']]';
 	}
 
 	/**
