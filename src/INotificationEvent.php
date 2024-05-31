@@ -52,6 +52,12 @@ interface INotificationEvent {
 	public function getLinksIntroMessage( IChannel $forChannel ): ?Message;
 
 	/**
+	 * @param DataTime $time
+	 * @return void
+	 */
+	public function setTime( DateTime $time ): void;
+
+	/**
 	 * @param IChannel $forChannel
 	 * @return EventLink[]
 	 */

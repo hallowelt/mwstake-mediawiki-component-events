@@ -56,6 +56,14 @@ abstract class NotificationEvent implements INotificationEvent {
 	}
 
 	/**
+	 * @param DataTime $time
+	 * @return void
+	 */
+	public function setTime( DataTime $time ): void {
+		$this->time = $time;
+	}
+
+	/**
 	 * @param IChannel $forChannel
 	 * @return Message|null
 	 */
