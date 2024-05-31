@@ -59,7 +59,7 @@ abstract class NotificationEvent implements INotificationEvent {
 	 * @param DataTime $time
 	 * @return void
 	 */
-	public function setTime( DataTime $time ): void {
+	public function setTime( DateTime $time ): void {
 		$this->time = $time;
 	}
 
