@@ -2,6 +2,7 @@
 
 namespace MWStake\MediaWiki\Component\Events;
 
+use MediaWiki\HookContainer\HookContainer;
 use Wikimedia\Rdbms\LBFactory;
 
 class Notifier {
@@ -11,15 +12,19 @@ class Notifier {
 	/** @var LBFactory */
 	private $loadBalancerFactory;
 
+	/** @var HookContainer */
+	private $hookContainer;
+
 	/** @var array */
 	private $queued = [];
 
 	/**
 	 * @param array $consumers
 	 */
-	public function __construct( array $consumers, LBFactory $loadBalancerFactory ) {
+	public function __construct( array $consumers, LBFactory $loadBalancerFactory, HookContainer $hookContainer ) {
 		$this->consumers = $consumers;
 		$this->loadBalancerFactory = $loadBalancerFactory;
+		$this->hookContainer = $hookContainer;
 	}
 
 	/**
@@ -123,7 +128,9 @@ class Notifier {
 		$this->filterOutOverrides();
 		foreach ( $this->queued as $event ) {
 			foreach ( $this->consumers as $consumer ) {
-				if ( !$consumer->isInterested( $event ) ) {
+				$isInterested = $consumer->isInterested( $event );
+				$this->hookContainer->run( 'MWStakeNotifierBeforeConsume', [ $consumer, &$event, &$isInterested ] );
+				if ( !$isInterested ) {
 					continue;
 				}
 				$consumer->consume( $event );

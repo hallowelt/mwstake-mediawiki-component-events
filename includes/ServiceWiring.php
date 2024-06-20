@@ -11,6 +11,6 @@ return [
 				$consumers[] = $consumer;
 			}
 		}
-		return new Notifier( $consumers, $services->getDBLoadBalancerFactory() );
+		return new Notifier( $consumers, $services->getDBLoadBalancerFactory(), $services->getHookContainer() );
 	}
 ];
