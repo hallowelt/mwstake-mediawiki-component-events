@@ -106,7 +106,7 @@ abstract class TitleEvent extends NotificationEvent implements ITitleEvent {
 			new EventLink(
 				$forChannel instanceof IExternalChannel ?
 					$this->getTitle()->getFullURL() : $this->getTitle()->getLocalURL(),
-				Message::newFromKey( 'ext-notifications-link-label-view-page' )
+				Message::newFromKey( 'ext-notifyme-link-label-view-page' )
 			)
 		];
 	}
