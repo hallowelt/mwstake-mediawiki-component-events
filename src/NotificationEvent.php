@@ -24,7 +24,12 @@ abstract class NotificationEvent implements INotificationEvent {
 	 */
 	public function __construct( UserIdentity $agent ) {
 		$this->agent = $agent;
-		$this->time = new DateTime();
+		$mwTimestamp = \MWTimestamp::now( TS_UNIX );
+		if ( is_string( $mwTimestamp ) ) {
+			$this->time = DateTime::createFromFormat( 'U', $mwTimestamp );
+		} else {
+			$this->time = new DateTime();
+		}
 	}
 
 	/**

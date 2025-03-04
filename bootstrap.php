@@ -6,7 +6,7 @@ if ( defined( 'MWSTAKE_MEDIAWIKI_COMPONENT_EVENTS_VERSION' ) ) {
 	return;
 }
 
-define( 'MWSTAKE_MEDIAWIKI_COMPONENT_EVENTS_VERSION', '3.0.5' );
+define( 'MWSTAKE_MEDIAWIKI_COMPONENT_EVENTS_VERSION', '3.0.6' );
 
 Bootstrapper::getInstance()
 	->register( 'events', static function () {
