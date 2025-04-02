@@ -3,11 +3,11 @@
 namespace MWStake\MediaWiki\Component\Events\Tests;
 
 use DateTime;
+use MediaWiki\Language\RawMessage;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Message\Message;
 use MediaWiki\User\UserIdentity;
-use Message;
 use MWStake\MediaWiki\Component\Events\INotificationEvent;
-use RawMessage;
 
 class DummyEvent implements INotificationEvent {
 	/** @var int */

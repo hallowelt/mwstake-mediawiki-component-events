@@ -5,12 +5,12 @@ declare( strict_types=1 );
 namespace MWStake\MediaWiki\Component\Events;
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Message\Message;
 use MediaWiki\Page\PageIdentity;
+use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
-use Message;
 use MWStake\MediaWiki\Component\Events\Delivery\IChannel;
 use MWStake\MediaWiki\Component\Events\Delivery\IExternalChannel;
-use Title;
 
 /**
  * Convenience base class for notification events
