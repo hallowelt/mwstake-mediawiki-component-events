@@ -7,6 +7,7 @@ use MediaWiki\Language\RawMessage;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Message\Message;
 use MediaWiki\User\UserIdentity;
+use MWStake\MediaWiki\Component\Events\Delivery\IChannel;
 use MWStake\MediaWiki\Component\Events\INotificationEvent;
 
 class DummyEvent implements INotificationEvent {
@@ -58,7 +59,7 @@ class DummyEvent implements INotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function getMessage(): Message {
+	public function getMessage( IChannel $forChannel ): Message {
 		return new RawMessage( 'dummy' );
 	}
 
@@ -69,10 +70,17 @@ class DummyEvent implements INotificationEvent {
 		return '';
 	}
 
+	public function getLinksIntroMessage( IChannel $forChannel ): ?Message {
+		return null;
+	}
+
+	public function setTime( DateTime $time ): void {
+	}
+
 	/**
 	 * @inheritDoc
 	 */
-	public function getLinks(): array {
+	public function getLinks( IChannel $forChannel ): array {
 		return [];
 	}
 
@@ -86,8 +94,8 @@ class DummyEvent implements INotificationEvent {
 	/**
 	 * @inheritDoc
 	 */
-	public function getGroupMessage( int $count ): Message {
-		return $this->getMessage();
+	public function getGroupMessage( int $count, IChannel $forChannel ): Message {
+		return $this->getMessage( $forChannel );
 	}
 
 	/**
@@ -97,5 +105,11 @@ class DummyEvent implements INotificationEvent {
 		return [
 			'dummy-sub-event'
 		];
+	}
+
+	public static function getArgsForTesting(
+		UserIdentity $agent, MediaWikiServices $services, array $extra = []
+	): array {
+		return [];
 	}
 }
