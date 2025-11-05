@@ -1,16 +1,15 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\Events\Tests;
+namespace MWStake\MediaWiki\Component\Events\Tests\Integration;
 
+use MediaWikiIntegrationTestCase;
 use MWStake\MediaWiki\Component\Events\Notifier;
-use PHPUnit\Framework\TestCase;
 
-class EmitterTest extends TestCase {
+class EmitterTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @dataProvider provideOverrideData
-	 * @covers \MWStake\MediaWiki\Component\Events\Emitter::emit
-	 * @covers \MWStake\MediaWiki\Component\Events\Emitter::__destruct
+	 * @covers \MWStake\MediaWiki\Component\Events\Notifier::emit
 	 */
 	public function testOverrides( $main, $sub, $expectedCalls ) {
 		$consumer = $this->getMockBuilder( DummyConsumer::class )
@@ -22,7 +21,11 @@ class EmitterTest extends TestCase {
 			->method( 'isInterested' )
 			->willReturn( true );
 
-		$emitter = new Notifier( [ $consumer ] );
+		$emitter = new Notifier(
+			[ $consumer ],
+			$this->getServiceContainer()->getDBLoadBalancerFactory(),
+			$this->getServiceContainer()->getHookContainer()
+		);
 		$emitter->emit( $main );
 		$emitter->emit( $sub );
 	}
@@ -51,7 +54,7 @@ class EmitterTest extends TestCase {
 	}
 
 	/**
-	 * @covers \MWStake\MediaWiki\Component\Events\Emitter::emit
+	 * @covers \MWStake\MediaWiki\Component\Events\Notifier::emit
 	 */
 	public function testEmit() {
 		$event = new DummyEvent();
@@ -67,12 +70,16 @@ class EmitterTest extends TestCase {
 			->with( $event )
 			->willReturn( true );
 
-		$emitter = new Notifier( [ $consumer ] );
+		$emitter = new Notifier(
+			[ $consumer ],
+			$this->getServiceContainer()->getDBLoadBalancerFactory(),
+			$this->getServiceContainer()->getHookContainer()
+		);
 		$emitter->emit( $event );
 	}
 
 	/**
-	 * @covers \MWStake\MediaWiki\Component\Events\Emitter::emit
+	 * @covers \MWStake\MediaWiki\Component\Events\Notifier::emit
 	 */
 	public function testEmitNotInterested() {
 		$event = new DummyEvent();
@@ -87,12 +94,16 @@ class EmitterTest extends TestCase {
 			->with( $event )
 			->willReturn( false );
 
-		$emitter = new Notifier( [ $consumer ] );
+		$emitter = new Notifier(
+			[ $consumer ],
+			$this->getServiceContainer()->getDBLoadBalancerFactory(),
+			$this->getServiceContainer()->getHookContainer()
+		);
 		$emitter->emit( $event );
 	}
 
 	/**
-	 * @covers \MWStake\MediaWiki\Component\Events\Emitter::emit
+	 * @covers \MWStake\MediaWiki\Component\Events\Notifier::emit
 	 */
 	public function testEmitMultipleConsumers() {
 		$event = new DummyEvent();
@@ -113,7 +124,11 @@ class EmitterTest extends TestCase {
 			->with( $event )
 			->willReturn( true );
 
-		$emitter = new Notifier( [ $consumer1, $consumer2 ] );
+		$emitter = new Notifier(
+			[ $consumer1, $consumer2 ],
+			$this->getServiceContainer()->getDBLoadBalancerFactory(),
+			$this->getServiceContainer()->getHookContainer()
+		);
 		$emitter->emit( $event );
 	}
 }
