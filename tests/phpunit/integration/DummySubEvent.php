@@ -1,6 +1,6 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\Events\Tests;
+namespace MWStake\MediaWiki\Component\Events\Tests\Integration;
 
 use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
