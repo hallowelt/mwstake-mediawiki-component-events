@@ -1,6 +1,6 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\Events\Tests;
+namespace MWStake\MediaWiki\Component\Events\Tests\Unit;
 
 use MWStake\MediaWiki\Component\Events\INotificationEvent;
 use MWStake\MediaWiki\Component\Events\INotificationEventConsumer;

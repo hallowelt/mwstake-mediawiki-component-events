@@ -1,18 +1,30 @@
 <?php
 
-namespace MWStake\MediaWiki\Component\Events\Tests;
+namespace MWStake\MediaWiki\Component\Events\Tests\Unit;
 
 use DateTime;
 use MediaWiki\Language\RawMessage;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Message\Message;
+use MediaWiki\User\User;
 use MediaWiki\User\UserIdentity;
 use MWStake\MediaWiki\Component\Events\Delivery\IChannel;
 use MWStake\MediaWiki\Component\Events\INotificationEvent;
 
 class DummyEvent implements INotificationEvent {
+
 	/** @var int */
 	private $id = 0;
+
+	/** @var User */
+	protected $user;
+
+	/**
+	 * @param User $user
+	 */
+	public function __construct( User $user ) {
+		$this->user = $user;
+	}
 
 	/**
 	 * @inheritDoc
@@ -25,7 +37,7 @@ class DummyEvent implements INotificationEvent {
 	 * @inheritDoc
 	 */
 	public function getAgent(): UserIdentity {
-		return MediaWikiServices::getInstance()->getUserFactory()->newFromId( 1 );
+		return $this->user;
 	}
 
 	/**
